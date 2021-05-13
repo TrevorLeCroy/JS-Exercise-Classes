@@ -89,12 +89,17 @@ class Airplane {
       this.tank += gallons;
     }
 
-    drive(distance) {
-      this.odometer += distance;
-      this.tank -= (distance / this.milesPerGallon);
-      if(this.tank <= 0) {
-        return `I ran out of fuel at ${this.odometer} miles!`;
+    drive(distance) {      
+      for(let i = 0; i < distance; i++) {
+        this.odometer += 1;
+        let decrement =  (1 / this.milesPerGallon);
+        this.tank -= decrement
+        if(this.tank <= 0) {
+          this.tank = 0;
+          return `I ran out of fuel at ${this.odometer} miles!`;
+        }
       }
+      this.tank = Math.round(this.tank);
     }
   }
   
@@ -111,10 +116,10 @@ class Airplane {
           + {name} and {location} of course come from the instance's own properties.
   */
  class Lambdasian {
-    constructor(name, age, location) {
-      this.name     = name;
-      this.age      = age;
-      this.location = location;
+    constructor(lambdasian) {
+      this.name     = lambdasian.name;
+      this.age      = lambdasian.age;
+      this.location = lambdasian.location;
     }
 
     speak() {
@@ -138,11 +143,11 @@ class Airplane {
   */
  class Instructor extends Lambdasian {
     constructor(lambdasian) {
-      super(lambdasian.name, lambdasian.age, lambdasian.location);
+      super({name: lambdasian.name, age: lambdasian.age, location: lambdasian.location});
 
-      this.specialty   = null;
-      this.favLanguage = null;
-      this.catchPhrase = null;
+      this.specialty   = lambdasian.specialty;
+      this.favLanguage = lambdasian.favLanguage;
+      this.catchPhrase = lambdasian.catchPhrase;
     }
 
     demo(subject) {
@@ -168,8 +173,29 @@ class Airplane {
           + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
           + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
   */
- class Student {
-     
+ class Student extends Lambdasian {
+    constructor(lambdasian) {
+      super({name: lambdasian.name, age: lambdasian.age, location: lambdasian.location});
+      this.previousBackground = lambdasian.previousBackground;
+      this.className          = lambdasian.className;
+      this.favSubjects        = lambdasian.favSubjects;
+    }
+
+    listSubjects() {
+      subjectString = 'Loving ';
+      this.favSubjects.forEach((subject) => {
+        subjectString += subject + ', ';
+      });
+      return subjectString;
+    }
+
+    PRAssignment(subject) {
+      return `${this.student.name} has submitted a PR for ${subject}`;
+    }
+
+    sprintChallenge(subject) {
+      return `${this.student.name} has begun sprint challenge on ${subject}`;
+    }
  }
   
   /*
@@ -185,8 +211,20 @@ class Airplane {
           + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
           + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
- class ProjectManager {
-     
+ class ProjectManager extends Instructor {
+     constructor(lambdasian) {
+        super({name: lambdasian.name, age: lambdasian.age, location: lambdasian.location});
+        this.gradClassName = lambdasian.gradClassName;
+        this.favInstructor = lambdasian.favInstructor;
+      }
+
+      standUp(slackChannel) {
+
+      } 
+
+      debugsCode(student, subject) {
+
+      }
  }
   /*
     STRETCH PROBLEM (no tests!)
