@@ -182,19 +182,23 @@ class Airplane {
     }
 
     listSubjects() {
-      subjectString = 'Loving ';
-      this.favSubjects.forEach((subject) => {
-        subjectString += subject + ', ';
-      });
+      let subjectString = 'Loving ';
+      for(let i = 0; i < this.favSubjects.length; i++) {
+        if(i < this.favSubjects.length - 1) {
+          subjectString += this.favSubjects[i] + ', ';
+        } else {
+          subjectString += this.favSubjects[i] + '!';
+        }
+      }
       return subjectString;
     }
 
     PRAssignment(subject) {
-      return `${this.student.name} has submitted a PR for ${subject}`;
+      return `${this.name} has submitted a PR for ${subject}`;
     }
 
     sprintChallenge(subject) {
-      return `${this.student.name} has begun sprint challenge on ${subject}`;
+      return `${this.name} has begun sprint challenge on ${subject}`;
     }
  }
   
@@ -214,16 +218,19 @@ class Airplane {
  class ProjectManager extends Instructor {
      constructor(lambdasian) {
         super({name: lambdasian.name, age: lambdasian.age, location: lambdasian.location});
+        this.specialty     = lambdasian.specialty;
+        this.favLanguage   = lambdasian.favLanguage;
+        this.catchPhrase   = lambdasian.catchPhrase;
         this.gradClassName = lambdasian.gradClassName;
         this.favInstructor = lambdasian.favInstructor;
       }
 
       standUp(slackChannel) {
-
+        return `${this.name} announces to ${slackChannel}, @channel standy times!`;
       } 
 
       debugsCode(student, subject) {
-
+        return `${this.name} debugs ${student.name}'s code on ${subject}`;
       }
  }
   /*
